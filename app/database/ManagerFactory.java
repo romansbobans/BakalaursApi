@@ -20,7 +20,7 @@ public class ManagerFactory {
 
     private static ManagerFactory INSTANCE;
 
-    public synchronized ManagerFactory getInstance()
+    public static synchronized ManagerFactory getInstance()
     {
         if (INSTANCE == null)
             INSTANCE = new ManagerFactory();
@@ -41,7 +41,8 @@ public class ManagerFactory {
     public CategoryManager getCategoryManager()
     {
 
-        return new MongoCategoryManager(db);
+        return new MongoCategoryManager(db
+                .getCollection(DBConstants.CATEGORIES_COLLECTION));
     }
 
     public VisitObjecManager getVisitObjectManager()

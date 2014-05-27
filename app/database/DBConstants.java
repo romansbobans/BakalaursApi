@@ -11,8 +11,7 @@ public class DBConstants {
 	public static final String HOST_NAME = "127.0.0.1";
 
 	public static final String VIEWS_COLLECTION = "views";
-	
-	
-	
-	
+
+
+    public static final String COMMENTS_COLLECTION = "comments";
 }

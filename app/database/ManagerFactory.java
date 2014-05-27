@@ -41,18 +41,17 @@ public class ManagerFactory {
     public CategoryManager getCategoryManager()
     {
 
-        return new MongoCategoryManager(db
-                .getCollection(DBConstants.CATEGORIES_COLLECTION));
+        return new MongoCategoryManager(db.getCollection(DBConstants.CATEGORIES_COLLECTION));
     }
 
     public VisitObjecManager getVisitObjectManager()
     {
 
-        return new MongoVisitObjecManager(db);
+        return new MongoVisitObjecManager(db.getCollection(DBConstants.VIEWS_COLLECTION));
     }
 
     public CommentManager getCommentManager()
     {
-        return new MongoCommentManager(db);
+        return new MongoCommentManager(db.getCollection(DBConstants.COMMENTS_COLLECTION));
     }
 }

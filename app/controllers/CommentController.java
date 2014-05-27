@@ -1,8 +1,13 @@
 package controllers;
 
+import com.google.gson.Gson;
+import dao.Comment;
 import database.ManagerFactory;
 import database.categories.CategoryManager;
 import database.comments.CommentManager;
+import play.data.DynamicForm;
+import play.data.Form;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -19,10 +24,23 @@ public class CommentController extends Controller {
         commentManager = ManagerFactory.getInstance().getCommentManager();
     }
 
-    public static Result uploadComment(String id) {
-        commentManager.uploadComment(id, "asdawqeqwd");
 
-        System.out.println("STAR SAVING COMMENT");
-        return ok(views.html.index.render());
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result uploadComment(String id) {
+
+        DynamicForm requestData = Form.form().bindFromRequest();
+        String reqJSON = requestData.data().toString();
+        try
+        {
+            Comment comment = new Gson().fromJson(reqJSON, Comment.class);
+
+            commentManager.uploadComment(id, comment.getText());
+
+            return ok(views.html.index.render());
+        }
+        catch (Exception e)
+        {
+            return internalServerError(e.getMessage());
+        }
     }
 }

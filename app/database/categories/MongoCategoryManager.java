@@ -9,6 +9,8 @@ import com.mongodb.DBObject;
 import dao.Category;
 import database.DBConstants;
 
+import java.util.Arrays;
+
 /**
  * Created by TAHKICT on 27/05/14.
  */
@@ -39,5 +41,21 @@ public class MongoCategoryManager implements CategoryManager {
 
         }
         return group;
+    }
+
+    @Override
+    public String getAllCategoriesRaw() {
+        DBCursor cursor = categoryCollection.find();
+
+        String[] objects = new String[cursor.count()];
+        int i = 0;
+
+        while (cursor.hasNext())
+        {
+            DBObject object = cursor.next();
+            objects[i++] = object.toString();
+        }
+
+        return Arrays.toString(objects);
     }
 }

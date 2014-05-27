@@ -7,4 +7,6 @@ import dao.Category;
  */
 public interface CategoryManager {
     Category[] getAllCategories();
+
+    String getAllCategoriesRaw();
 }

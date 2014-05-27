@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET        /                       controllers.Application.index()
+GET        /                       controllers.CategoryController.index()
 
 GET        /upload/category        controllers.CategoryController.prepareCategoryUploadWindow()
 

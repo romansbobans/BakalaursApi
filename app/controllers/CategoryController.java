@@ -24,4 +24,7 @@ public class CategoryController {
     }
 
 
+    public static Result index() {
+        return ok(Arrays.toString(categoryManager.getAllCategories()));
+    }
 }

@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.*;
 import dao.Category;
-import database.DBConstants;
+import dao.ImagePair;
+import exceptions.ObjectNotInsertedError;
 import utils.MongoFieldNames;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -69,14 +71,18 @@ public class MongoCategoryManager implements CategoryManager {
     }
 
     @Override
-    public boolean saveCategory(Category category) {
-        categoryCollection.insert(createCategoryObject(category));
-        return true;
+    public String saveCategory(Category category) {
+        String id = String.valueOf(UUID.randomUUID());
+        //Object not inserted
+        if (categoryCollection.insert(createCategoryObject(category, id)).getN() == 0)
+            return null;
+
+
+        return id;
     }
 
     @Override
-    public boolean saveCategory(String rawCategory) {
-
+    public String saveCategory(String rawCategory) {
         return saveCategory(gson.fromJson(rawCategory, Category.class));
     }
 
@@ -97,19 +103,19 @@ public class MongoCategoryManager implements CategoryManager {
     }
 
     @Override
-    public boolean addImageToCategory(String catId, String link) {
+    public boolean addImageToCategory(String catId, List<ImagePair> images) {
 
-        return changeCategoryImage(catId, link);
+        return changeCategoryImage(catId, images);
     }
 
     @Override
-    public boolean changeCategoryImage(String catId, String newLink) {
-        categoryCollection.update(new BasicDBObject(MongoFieldNames.CATEGORY_ID, catId), new BasicDBObject(MongoFieldNames.Categories.THUMB_URL, newLink));
+    public boolean changeCategoryImage(String catId, List<ImagePair> images) {
+        categoryCollection.update(new BasicDBObject(MongoFieldNames.CATEGORY_ID, catId), new BasicDBObject(MongoFieldNames.Categories.THUMB_URL, images.get(0).getThumbnail()));
         return true;
     }
 
 
-    private DBObject createCategoryObject(Category cat) {
+    private DBObject createCategoryObject(Category cat, String id) {
         BasicDBList object = new BasicDBList();
         while (cat.hasNext()) {
             Category.Description descr = cat.next();
@@ -117,7 +123,7 @@ public class MongoCategoryManager implements CategoryManager {
                     .getLang()).append(MongoFieldNames.Categories.NAME,
                     descr.getName()).append(MongoFieldNames.Categories.SHORT_DESCRIPTION, descr.getShortDescription()));
         }
-        BasicDBObject obj = new BasicDBObject(MongoFieldNames.ID, String.valueOf(UUID.randomUUID())).append(
+        BasicDBObject obj = new BasicDBObject(MongoFieldNames.ID, id).append(
                 MongoFieldNames.Categories.OBJ_DESCR, object);
         if (cat.getImage() != null) {
             obj.append(MongoFieldNames.Categories.THUMB_URL, cat.getImage());

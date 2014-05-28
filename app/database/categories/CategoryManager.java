@@ -1,6 +1,9 @@
 package database.categories;
 
 import dao.Category;
+import dao.ImagePair;
+
+import java.util.List;
 
 /**
  * Created by TAHKICT on 27/05/14.
@@ -12,9 +15,9 @@ public interface CategoryManager {
 
     Category getCategory(String catId);
 
-    boolean saveCategory(Category category);
+    String saveCategory(Category category);
 
-    boolean saveCategory(String rawCategory);
+    String saveCategory(String rawCategory);
 
     boolean removeCategory(String catId);
 
@@ -22,7 +25,7 @@ public interface CategoryManager {
 
     boolean editCategory(String catId, Category newCategory, String lang);
 
-    boolean addImageToCategory(String catId, String link);
+    boolean addImageToCategory(String catId, List<ImagePair> images);
 
-    boolean changeCategoryImage(String catId, String newLink);
+    boolean changeCategoryImage(String catId, List<ImagePair> images);
 }

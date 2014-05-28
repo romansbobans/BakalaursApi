@@ -20,6 +20,8 @@ public class CategoryController extends Controller {
     {
         categoryManager = ManagerFactory.getInstance().getCategoryManager();
     }
+
+
     public static Result prepareCategoryUploadWindow() {
         return ok(Arrays.toString(categoryManager.getAllCategories()));
     }

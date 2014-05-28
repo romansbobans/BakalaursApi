@@ -1,8 +1,10 @@
 package database.visitobjects;
 
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import dao.ImagePair;
 import dao.VisitObject;
+
+import java.util.List;
 
 /**
  * Created by TAHKICT on 27/05/14.
@@ -66,7 +68,7 @@ public class MongoVisitObjecManager implements VisitObjecManager {
     }
 
     @Override
-    public boolean addImagesToView(String objectId, String[] links) {
+    public boolean addImagesToView(String objectId, List<ImagePair> imagePairs) {
         return false;
     }
 

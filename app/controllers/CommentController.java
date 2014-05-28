@@ -36,7 +36,7 @@ public class CommentController extends Controller {
 
             commentManager.uploadComment(id, comment.getText());
 
-            return ok(views.html.index.render());
+            return ok();
         }
         catch (Exception e)
         {

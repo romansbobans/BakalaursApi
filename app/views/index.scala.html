@@ -1,8 +1,4 @@
-@helper.form(action = routes.CategoryController.saveCategory()) {
-
-}
-
-@*<form class="form-horizontal" role="form" action="">
+<form class="form-horizontal" role="form" action="@routes.CategoryController.saveCategory()">
     <div class="form-group">
         <label for="inputTitle" class="col-sm-2 control-label">Title</label>
         <div class="col-md-4">
@@ -19,7 +15,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" onclick="return false" class="btn btn-default">Submit</button>
         </div>
     </div>
-</form>*@
+</form>

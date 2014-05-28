@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.*;
 import dao.Category;
 import dao.ImagePair;
-import exceptions.ObjectNotInsertedError;
 import utils.MongoFieldNames;
 
 import java.util.Arrays;

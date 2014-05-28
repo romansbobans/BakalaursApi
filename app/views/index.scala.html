@@ -1,18 +1,24 @@
 <form class="form-horizontal" role="form" action="@routes.CategoryController.saveCategory()">
 
-    <div class="panel panel-default">
+    <div class="panel panel-default col-md-4">
         <div class="panel-body">
-            <label for="inputTitle" class="col-sm-2 control-label">Title</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+            <div class="form-group">
+                <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+                </div>
             </div>
 
-            <label for="inputDescription" class="col-sm-2 control-label">Description</label>
-            <div class="col-md-4">
-                <textarea class="form-control" rows="5" id="inputDescription" placeholder="Description"></textarea>
+            <div class="form-group">
+                <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" rows="5" id="inputDescription" placeholder="Description"></textarea>
+                </div>
             </div>
         </div>
     </div>
+
+
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

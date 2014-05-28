@@ -15,12 +15,18 @@ $(document).ready(function() {
         this.description = description;
     }
 
+    /**
+     * Triggers when add category pressed
+     */
     $("#add-category").click(function() {
         var clonable = $(".panel-wrapper").first().clone(true, true);
         clonable.find("input").val("");
         $("#panels").append(clonable.fadeIn("fast"));
     });
 
+    /**
+     * Triggers when submit button pressed
+     */
     $("#submit").click(function() {
 
         $(".panel-wrapper").each(function() {
@@ -46,6 +52,9 @@ $(document).ready(function() {
         $("#categories-form").submit();
     });
 
+    /**
+     * Triggers when remove block icon clicked
+     */
     $("span.remove-button").on('click', function(){
         if ($(".panel-wrapper").length<=1) return;
 
@@ -54,6 +63,9 @@ $(document).ready(function() {
         });
     });
 
+    /**
+     * For file select
+     */
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;

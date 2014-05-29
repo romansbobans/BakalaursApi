@@ -2,14 +2,12 @@ package database.visitobjects;
 
 import com.google.gson.Gson;
 import com.mongodb.*;
-import dao.Category;
 import dao.ImagePair;
 import dao.VisitObject;
 import utils.FileManager;
 import utils.MongoFieldNames;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import static utils.MongoFieldNames.*;
@@ -148,13 +146,35 @@ public class MongoVisitObjecManager implements VisitObjecManager {
     }
 
     @Override
-    public boolean addImagesToView(String objectId, List<ImagePair> imagePairs) {
-        return false;
+    public boolean addImagesToView(String objectId, ImagePair imagePairs) {
+        BasicDBObject updateQuery = new BasicDBObject();
+        updateQuery.put( ID, objectId );
+
+        System.out.println(imagePairs.getImage() + "  " + imagePairs.getThumbnail());
+        BasicDBObject updateCommand = new BasicDBObject();
+        updateCommand.put( "$push", new BasicDBObject( IMAGE_PAIRS,
+                new BasicDBObject(THUMBNAIL, imagePairs.getThumbnail()).append(IMAGE, imagePairs.getImage()) ) );
+        WriteResult result = visitObjectCollection.update( updateQuery, updateCommand );
+        return true;
     }
 
     @Override
-    public boolean removeImagesFromView(String objectId, String... link) {
+    public boolean setTitleIlage(String objectId, String image) {
+        visitObjectCollection.findAndModify(new BasicDBObject(ID, objectId),
+                new BasicDBObject("$set", new BasicDBObject(TITLE_IMAGE_URL, image)));
+        return true;
+    }
+
+    @Override
+    public boolean removeImagesFromView(String objectId, String link) {
         VisitObject object = getVisitObject(objectId);
+        BasicDBObject updateQuery = new BasicDBObject();
+        updateQuery.put( ID, objectId );
+
+        BasicDBObject updateCommand = new BasicDBObject();
+        updateCommand.put( "$pull", new BasicDBObject( IMAGE_PAIRS,
+                new BasicDBObject(IMAGE, link) ) );
+        WriteResult result = visitObjectCollection.update( updateQuery, updateCommand );
 
         return false;
     }

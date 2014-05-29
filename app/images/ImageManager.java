@@ -19,13 +19,10 @@ import java.util.UUID;
  * Created by TAHKICT on 28/05/14.
  */
 public class ImageManager {
-    public static List<ImagePair> saveFiles(Http.MultipartFormData body) throws IOException{
+    public static ImagePair saveFiles(Http.MultipartFormData body) throws IOException{
 
-        int index = -1;
-        List<ImagePair> files = new ArrayList<>();
-        while (true) {
 
-            Http.MultipartFormData.FilePart picture = body.getFile("picture" + (index == -1 ? "" : index));
+            Http.MultipartFormData.FilePart picture = body.getFile("picture");
             if (picture != null) {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
@@ -39,7 +36,7 @@ public class ImageManager {
 
                 fileName = fileName.substring(0, fileName.lastIndexOf('.'));
 
-                int size = (int) (file.length()/1024/1024);
+                int size = (int) (file.length() / 1024 / 1024);
 
 
                 File[] fileToSave = generateComplementaryFileNames();
@@ -49,16 +46,11 @@ public class ImageManager {
                 fileToSave[1].createNewFile();
                 ImageIO.write(thumb, "png", fileToSave[1]);
 
-                ImagePair pair = new ImagePair(fileToSave[0].getAbsolutePath(), fileToSave[1].getAbsolutePath());
+                ImagePair pair = new ImagePair(fileToSave[0].getPath(), fileToSave[1].getPath());
 
-                files.add(pair);
-
-                index++;
-            } else
-                break;
-        }
-
-        return files;
+                return pair;
+            }
+        return null;
     }
 
     public static String saveFile(Http.MultipartFormData body) throws IOException{
@@ -105,7 +97,7 @@ public class ImageManager {
 
     private static File[] generateComplementaryFileNames() {
 
-        File image = new File("public/images/images/" + String.valueOf(UUID.randomUUID()) + ".png");
+        File image = new File("public/images/" + String.valueOf(UUID.randomUUID()) + ".png");
         File thumbnail = new File("public/images/thumbnails/" + String.valueOf(UUID.randomUUID()) + ".png");
         return new File[]{image, thumbnail};
     }

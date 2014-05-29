@@ -31,8 +31,10 @@ public interface VisitObjecManager {
 
     boolean editView(String objectId, VisitObject objectRaw);
 
-    boolean addImagesToView(String objectId, List<ImagePair> imagePairs);
+    boolean addImagesToView(String objectId, ImagePair imagePairs);
 
-    boolean removeImagesFromView(String objectId, String... link);
+    boolean setTitleIlage(String objectId, String image);
+
+    boolean removeImagesFromView(String objectId, String link);
 
 }

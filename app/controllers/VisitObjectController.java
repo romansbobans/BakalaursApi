@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.Category;
 import dao.ImagePair;
 import database.ManagerFactory;
 import database.visitobjects.VisitObjecManager;
@@ -10,6 +11,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,19 +24,6 @@ public class VisitObjectController extends Controller {
     static
     {
         visitObjectManager = ManagerFactory.getInstance().getVisitObjectManager();
-    }
-
-    public static Result uploadImages(String id) {
-
-        Http.MultipartFormData fdata = request().body().asMultipartFormData();
-        try {
-            List<ImagePair> pairs = ImageManager.saveFiles(fdata);
-            visitObjectManager.addImagesToView(id, pairs);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return TODO;
     }
 
     @BodyParser.Of(BodyParser.Json.class)
@@ -73,11 +62,25 @@ public class VisitObjectController extends Controller {
     }
 
     public static Result addImage(String id) {
-        return play.mvc.Results.TODO;
+        Http.MultipartFormData fdata = request().body().asMultipartFormData();
+
+        try {
+            ImagePair thumbnail = ImageManager.saveFiles(fdata);
+            if (thumbnail != null)
+            {
+                visitObjectManager.addImagesToView(id, thumbnail);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ok();
     }
 
     public static Result removeImage(String id, String imageName) {
-        return play.mvc.Results.TODO;
+
+        visitObjectManager.removeImagesFromView(id, imageName);
+        return ok();
     }
 
     public static Result prepareEditPage(String id, String lang) {
@@ -87,5 +90,21 @@ public class VisitObjectController extends Controller {
     public static Result getRawViews(String id) {
         String views = visitObjectManager.getAllVisitObjectForCategoryRaw(id);
         return ok(views);
+    }
+
+    public static Result saveTitleImage(String id) {
+        Http.MultipartFormData fdata = request().body().asMultipartFormData();
+
+        try {
+            String thumbnail = ImageManager.saveFile(fdata);
+            if (thumbnail != null)
+            {
+                visitObjectManager.setTitleIlage(id, thumbnail);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ok();
     }
 }

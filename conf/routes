@@ -19,7 +19,10 @@ POST          /edit/category/:id/:lang          controllers.CategoryController.e
 POST          /image/category/:id               controllers.CategoryController.changeImage(id: String)
 
 
+
 POST          /upload/view/:id                  controllers.VisitObjectController.saveVisitObject(id: String)
+
+POST          /view/titleimage/:id              controllers.VisitObjectController.saveTitleImage(id: String)
 
 GET           /views/:id                        controllers.VisitObjectController.prepareVisitObjectPage(id: String)
 
@@ -35,7 +38,7 @@ POST          /upload/view/:id                  controllers.VisitObjectControlle
 
 POST          /image/view/:id                   controllers.VisitObjectController.addImage(id: String)
 
-DELETE        /image/view/:id/:imageName        controllers.VisitObjectController.removeImage(id: String, imageName: String)
+DELETE        /image/view/:id/*imageName        controllers.VisitObjectController.removeImage(id: String, imageName: String)
 
 
 #For mobile
@@ -46,11 +49,11 @@ GET           /raw/views/:id                    controllers.VisitObjectControlle
 
 POST          /upload/comment/:id               controllers.CommentController.uploadComment(id: String)
 
-GET          /comment/:id               controllers.CommentController.getComments(id: String)
+GET           /comment/:id                      controllers.CommentController.getComments(id: String)
 
 GET           /raw/categories                   controllers.CategoryController.getRawCategories()
 
 #GET         /*filename  controllers.Application.at(filename: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/public/*file                     controllers.Assets.at(path="/public", file)
+GET           /assets/public/*file              controllers.Assets.at(path="/public", file)

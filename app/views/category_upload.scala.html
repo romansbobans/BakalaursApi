@@ -1,0 +1,65 @@
+
+<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="categories-form" action="@routes.CategoryController.saveCategory()">
+
+    <div class="row">
+        <div class="input-group col-md-4">
+            <span class="input-group-btn">
+                <span class="btn btn-primary btn-file">
+				    Browse… <input type="file" name="picture" required="true">
+				</span>
+            </span>
+            <input type="text" class="form-control" placeholder="Izvēlieties attēlu" readonly="">
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Kategorijas</h3>
+    </div>
+
+
+    <div class="row">
+        <button type="button" id="add-category" class="btn btn-sm btn-primary">Pievienot <span class="glyphicon glyphicon-plus"></span></button>
+    </div>
+
+    <div class="row" id="panels">
+        <div class="row panel-wrapper">
+            <div class="panel panel-default col-md-4">
+                <span class="glyphicon glyphicon-remove remove-button"></span>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="selectLang" class="col-sm-2 control-label">Valoda</label>
+                        <div class="col-md-4">
+                            <select id="selectLang" class="form-control lang" required="true">
+                                <option value="LV">Latviešu</option>
+                                <option value="EN">Angļu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle" class="col-sm-2 control-label">Nosaukums</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control name" id="inputTitle" placeholder="Nosaukums" required="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputDescription" class="col-sm-2 control-label">Apraksts</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control shortDescription" rows="5" id="inputDescription" placeholder="Apraksts"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="panels-json" name="json">
+
+    <div class="row">
+        <div>
+            <button id="submit" class="btn btn-primary">Saglabāt</button>
+        </div>
+    </div>
+
+
+</form>

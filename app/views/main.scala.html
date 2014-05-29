@@ -12,16 +12,23 @@
         <script src="@routes.Assets.at("javascripts/jquery.base64.js")" type="text/javascript"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
-
     </head>
     <body>
         <nav class="navbar navbar-inverse" role="navigation">
             <a class="navbar-brand" href="#">CMS</a>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Categories</a></li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategorijas <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.CategoryController.index()">Saraksts</a></li>
+                            <li><a href="@routes.CategoryController.prepareCategoryUploadWindow()">Pievienot</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
+
+
         </nav>
         <div id="content">
         @content

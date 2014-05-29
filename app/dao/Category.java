@@ -92,7 +92,7 @@ public class Category implements Iterator<Category.Description> {
         return "Category{" +
                 "id='" + id + '\'' +
                 ", image='" + image + '\'' +
-                ", index=" + index +
+                ", category_upload=" + index +
                 ", objectDescription=" + Arrays.toString(objectDescription) +
                 '}';
     }

@@ -262,7 +262,7 @@ public class VisitObject implements Iterator<VisitObject.VisitObjectDescription>
                 ", titleImageUrl='" + titleImageUrl + '\'' +
                 ", imagePairs=" + Arrays.toString(imagePairs) +
                 ", objectDescriptions=" + Arrays.toString(objectDescriptions) +
-                ", index=" + index +
+                ", category_upload=" + index +
                 ", location=" + location +
                 ", rating=" + rating +
                 ", ratingCount=" + ratingCount +

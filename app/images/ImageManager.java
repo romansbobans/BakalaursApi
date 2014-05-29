@@ -61,6 +61,42 @@ public class ImageManager {
         return files;
     }
 
+    public static String saveFile(Http.MultipartFormData body) throws IOException{
+
+        int index = -1;
+        List<ImagePair> files = new ArrayList<>();
+        while (true) {
+
+            Http.MultipartFormData.FilePart picture = body.getFile("picture");
+
+            if (picture != null) {
+                String fileName = picture.getFilename();
+                File file = picture.getFile();
+
+                System.out.println(file.length());
+
+
+                BufferedImage image = ImageIO.read(file);
+
+                BufferedImage thumb = ImageUtils.resizeImage(image);
+
+                File fileToSave = generateSingleThumbnailFileName();
+                System.out.println("File: " + fileToSave.getAbsolutePath());
+
+                fileToSave.createNewFile();
+
+                ImageIO.write(thumb, "png", fileToSave);
+
+
+                return fileToSave.getPath();
+
+            } else
+                break;
+        }
+
+        return null;
+    }
+
     private static File[] generateComplementaryFileNames() {
 
         File image = new File("public/images/images/" + String.valueOf(UUID.randomUUID()) + ".png");
@@ -68,4 +104,9 @@ public class ImageManager {
         return new File[]{image, thumbnail};
     }
 
+    private static File generateSingleThumbnailFileName() {
+
+        File thumbnail = new File("public/images/thumbnails/" + String.valueOf(UUID.randomUUID()) + ".png");
+        return thumbnail;
+    }
 }

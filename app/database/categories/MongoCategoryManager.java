@@ -4,11 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.*;
 import dao.Category;
-import dao.ImagePair;
+import utils.FileManager;
 import utils.MongoFieldNames;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -72,9 +71,10 @@ public class MongoCategoryManager implements CategoryManager {
     @Override
     public String saveCategory(Category category) {
         String id = String.valueOf(UUID.randomUUID());
+        categoryCollection.insert(createCategoryObject(category, id));
         //Object not inserted
-        if (categoryCollection.insert(createCategoryObject(category, id)).getN() == 0)
-            return null;
+    //    if ().getN() == 0)
+         //   return null;
 
 
         return id;
@@ -82,34 +82,67 @@ public class MongoCategoryManager implements CategoryManager {
 
     @Override
     public String saveCategory(String rawCategory) {
-        return saveCategory(gson.fromJson(rawCategory, Category.class));
+        Category.Description[] c = gson.fromJson(rawCategory, Category.Description[].class);
+
+        Category category = new Category();
+        category.setDescription(c);
+        return saveCategory(category);
     }
 
     @Override
     public boolean removeCategory(String catId) {
-        categoryCollection.remove(new BasicDBObject(MongoFieldNames.CATEGORY_ID, catId));
+        removeThumbnail(catId);
+        categoryCollection.remove(new BasicDBObject(MongoFieldNames.ID, catId));
         return false;
+    }
+
+    private void removeThumbnail(String catId)
+    {
+        DBCursor cursor = categoryCollection.find(new BasicDBObject(MongoFieldNames.ID, catId), new BasicDBObject(MongoFieldNames.Categories.THUMB_URL, 1));
+        if (cursor.hasNext())
+        {
+            String url = (String) cursor.next().get(MongoFieldNames.Categories.THUMB_URL);
+            if (url != null)
+            {
+                FileManager.removeFile(url);
+            }
+        }
     }
 
     @Override
     public boolean editCategory(String catId, String rawCategory, String lang) {
-        return false;
+        System.out.println(rawCategory + "\n");
+
+        Category c = gson.fromJson(rawCategory, Category.class);
+
+        Category.Description d = c.next();
+
+        DBObject updateQuery = new BasicDBObject(MongoFieldNames.Categories.NAME,
+                d.getName()).append(MongoFieldNames.Categories.SHORT_DESCRIPTION, d.getShortDescription()).append(MongoFieldNames.Categories.LANG, d.getLang());
+        System.out.println(rawCategory);
+        DBObject statusQuery = new BasicDBObject(MongoFieldNames.Categories.LANG, lang);
+        DBObject fields = new BasicDBObject("$elemMatch", statusQuery);
+        DBObject query = new BasicDBObject(MongoFieldNames.ID, catId).append(MongoFieldNames.Categories.OBJ_DESCR,fields);
+        categoryCollection.update(query, new BasicDBObject("$set", new BasicDBObject(new BasicDBObject(MongoFieldNames.Categories.OBJ_DESCR + ".$", updateQuery))));
+        return true;
     }
 
     @Override
     public boolean editCategory(String catId, Category newCategory, String lang) {
-        return false;
+        String rawCategory = gson.toJson(newCategory);
+        return editCategory(catId, rawCategory, lang);
     }
 
     @Override
-    public boolean addImageToCategory(String catId, List<ImagePair> images) {
+    public boolean addImageToCategory(String catId, String image) {
 
-        return changeCategoryImage(catId, images);
+        return changeCategoryImage(catId, image);
     }
 
     @Override
-    public boolean changeCategoryImage(String catId, List<ImagePair> images) {
-        categoryCollection.update(new BasicDBObject(MongoFieldNames.CATEGORY_ID, catId), new BasicDBObject(MongoFieldNames.Categories.THUMB_URL, images.get(0).getThumbnail()));
+    public boolean changeCategoryImage(String catId, String image) {
+        removeThumbnail(catId);
+        categoryCollection.update(new BasicDBObject(MongoFieldNames.ID, catId), new BasicDBObject("$set",new BasicDBObject(MongoFieldNames.Categories.THUMB_URL, image)));
         return true;
     }
 

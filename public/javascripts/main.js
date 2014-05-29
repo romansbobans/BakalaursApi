@@ -46,7 +46,7 @@ $(document).ready(function() {
         console.log(jsonBase64String);
 
         // insert in hidden input field as value
-        $("#panels-json").val(jsonBase64String);
+        $("#panels-json").val(jsonString);
 
         // submit the form manually
         $("#categories-form").submit();

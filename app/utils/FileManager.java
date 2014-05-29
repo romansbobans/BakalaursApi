@@ -121,6 +121,14 @@ public class FileManager {
 		}
 		return file;
 	}
+
+    public static void removeFile(String url) {
+        if (url == null)
+            return;
+        File file = new File(url);
+        if (file.exists())
+            file.delete();
+    }
 /*
 
 	public static List<ImageThumbnailPair> createImageThumbnailPair(

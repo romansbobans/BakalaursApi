@@ -1,11 +1,13 @@
 package controllers;
 
+import com.mongodb.util.Base64Codec;
 import com.ning.http.multipart.MultipartBody;
 import dao.Category;
 import dao.ImagePair;
 import database.ManagerFactory;
 import database.categories.CategoryManager;
 import images.ImageManager;
+import org.jboss.netty.handler.codec.base64.Base64Decoder;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.BodyParser;
@@ -15,8 +17,10 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.main;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import static play.mvc.Results.ok;
@@ -38,6 +42,10 @@ public class CategoryController extends Controller {
         return ok(Arrays.toString(categoryManager.getAllCategories()));
     }
 
+    public static Result prepareCategoryEditWindow(String id) {
+        return ok(Arrays.toString(categoryManager.getAllCategories()));
+    }
+
 
     public static Result index() {
         return ok(main.render("Welcome!", index.render()));
@@ -45,9 +53,13 @@ public class CategoryController extends Controller {
 
     public static Result saveCategory() {
         Http.MultipartFormData fdata = request().body().asMultipartFormData();
+
+        String[] data = fdata.asFormUrlEncoded().get("json");
+        System.out.println(Arrays.toString(data));
         try {
-            List<ImagePair> pairs = ImageManager.saveFiles(fdata);
-            String id = categoryManager.saveCategory("");
+            String thumbnail = ImageManager.saveFile(fdata);
+            String id = categoryManager.saveCategory(data[0]);
+
             if (id == null)
             {
                 return internalServerError();
@@ -57,15 +69,19 @@ public class CategoryController extends Controller {
             {
                 return internalServerError();
             }
-            if (pairs.size() > 0)
+            System.out.println("GOT IMAGE: " + thumbnail);
+
+            if (thumbnail != null)
             {
-                categoryManager.addImageToCategory(category.getId(), pairs);
+
+                System.out.println("GOT IMAGE: " + thumbnail);
+                categoryManager.addImageToCategory(category.getId(), thumbnail);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return play.mvc.Results.TODO;
+        return redirect("/");
     }
 
     public static Result deleteCategory(String id) {
@@ -73,13 +89,30 @@ public class CategoryController extends Controller {
         return redirect("/");
     }
 
+    //Syntax of JSON: {"object_description":[{"lang":"LV","name":"Muzeji","shortDescription":"texthere"}]}
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result editCategory(String id) {
-        DynamicForm requestData = Form.form().bindFromRequest();
-        String reqJSON = requestData.data().toString();
+    public static Result editCategory(String id, String lang) {
+
+        String reqJSON = request().body().asJson().toString();
+
+        categoryManager.editCategory(id, reqJSON, lang);
         //categoryManager.editCategory()
         return play.mvc.Results.TODO;
     }
 
 
+    public static Result changeImage(String id) {
+
+        Http.MultipartFormData fdata = request().body().asMultipartFormData();
+        String pair = null;
+        try {
+            pair = ImageManager.saveFile(fdata);
+            categoryManager.getCategory(id).getImage();
+            categoryManager.changeCategoryImage(id, pair);
+            return redirect("/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return internalServerError();
+    }
 }

@@ -4,19 +4,40 @@
 
 # Home page
 
-GET           /                               controllers.CategoryController.index()
+GET           /                                 controllers.CategoryController.index()
 
-GET           /upload/category                controllers.CategoryController.prepareCategoryUploadWindow()
+GET           /upload/category                  controllers.CategoryController.prepareCategoryUploadWindow()
 
-POST          /upload/category                controllers.CategoryController.saveCategory()
+POST          /upload/category                  controllers.CategoryController.saveCategory()
 
-DELETE        /delete/category/:id                controllers.CategoryController.deleteCategory(id: String)
+DELETE        /delete/category/:id              controllers.CategoryController.deleteCategory(id: String)
 
-POST        /edit/category/:id           controllers.CategoryController.editCategory(id: String)
+GET           /edit/category/:id                controllers.CategoryController.prepareCategoryEditWindow(id: String)
 
-POST          /upload/comment/:id             controllers.CommentController.uploadComment(id: String)
+POST          /edit/category/:id/:lang          controllers.CategoryController.editCategory(id: String, lang: String)
 
-POST          /upload/views/images/:id        controllers.VisitObjectController.uploadImages(id: String)
+POST          /image/category/:id               controllers.CategoryController.changeImage(id: String)
+
+POST          /upload/comment/:id               controllers.CommentController.uploadComment(id: String)
+
+POST          /upload/view/:id                  controllers.VisitObjectController.saveVisitObject(id: String)
+
+GET           /views/:id                        controllers.VisitObjectController.prepareVisitObjectPage(id: String)
+
+GET           /upload/view/:id                  controllers.VisitObjectController.prepareVisitObjectUploadPage(id: String)
+
+DELETE        /delete/view/:id                  controllers.VisitObjectController.deleteVisitObject(id: String)
+
+GET           /view/add/:id                     controllers.VisitObjectController.prepareAddLanguagePage(id: String)
+
+GET           /view/add/:id/:lang               controllers.VisitObjectController.prepareEditPage(id: String, lang: String)
+
+POST          /upload/view/:id                  controllers.VisitObjectController.editVisitObject(id: String)
+
+POST          /image/view/:id                   controllers.VisitObjectController.addImage(id: String)
+
+DELETE        /image/view/:id/:imageName        controllers.VisitObjectController.removeImage(id: String, imageName: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                   controllers.Assets.at(path="/public", file)
+GET           /assets/*file                     controllers.Assets.at(path="/public", file)

@@ -10,6 +10,8 @@ import java.util.Iterator;
  */
 public class Category implements Iterator<Category.Description> {
     String id;
+
+    @SerializedName("thumb_url")
     String image;
     private int index;
 
@@ -38,6 +40,12 @@ public class Category implements Iterator<Category.Description> {
     @Override
     public void remove() {
 
+    }
+
+    public void setDescription(Description[] description)
+    {
+        index = 0;
+        this.objectDescription = description;
     }
 
     public class Description {

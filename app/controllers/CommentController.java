@@ -45,7 +45,7 @@ public class CommentController extends Controller {
     }
 
     public static Result getComments(String id) {
-        commentManager.getComments(id);
-        return play.mvc.Results.TODO;
+        String comments = commentManager.getComments(id);
+        return ok(comments);
     }
 }

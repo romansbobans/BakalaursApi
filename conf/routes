@@ -46,7 +46,7 @@ GET           /raw/views/:id                    controllers.VisitObjectControlle
 
 POST          /upload/comment/:id               controllers.CommentController.uploadComment(id: String)
 
-POST          /comment/:id               controllers.CommentController.getComments(id: String)
+GET          /comment/:id               controllers.CommentController.getComments(id: String)
 
 GET           /raw/categories                   controllers.CategoryController.getRawCategories()
 

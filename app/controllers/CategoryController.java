@@ -115,4 +115,9 @@ public class CategoryController extends Controller {
         }
         return internalServerError();
     }
+
+    public static Result getRawCategories() {
+        String categories = categoryManager.getAllCategoriesRaw();
+        return ok(categories);
+    }
 }

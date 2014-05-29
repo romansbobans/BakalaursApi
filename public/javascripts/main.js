@@ -9,10 +9,10 @@ $(document).ready(function() {
 
     var panels = [];
 
-    function Panel(lang, title, description) {
+    function Panel(lang, name, shortDescription) {
         this.lang = lang;
-        this.title = title;
-        this.description = description;
+        this.name = name;
+        this.shortDescription = shortDescription;
     }
 
     /**
@@ -31,10 +31,10 @@ $(document).ready(function() {
 
         $(".panel-wrapper").each(function() {
             var lang = $(this).find(".lang").val();
-            var title = $(this).find(".title").val();
-            var description = $(this).find(".description").val();
+            var name = $(this).find(".name").val();
+            var shortDescription = $(this).find(".shortDescription").val();
 
-            panels.push(new Panel(lang, title, description));
+            panels.push(new Panel(lang, name, shortDescription));
         })
 
         // convert to json and serialize base64

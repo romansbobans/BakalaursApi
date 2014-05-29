@@ -83,4 +83,9 @@ public class VisitObjectController extends Controller {
     public static Result prepareEditPage(String id, String lang) {
         return play.mvc.Results.TODO;
     }
+
+    public static Result getRawViews(String id) {
+        String views = visitObjectManager.getAllVisitObjectForCategoryRaw(id);
+        return ok(views);
+    }
 }

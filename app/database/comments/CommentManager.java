@@ -6,4 +6,6 @@ package database.comments;
 public interface CommentManager {
 
     void uploadComment(String objectId, String commentText);
+
+    String getComments(String id);
 }

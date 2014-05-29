@@ -43,4 +43,9 @@ public class CommentController extends Controller {
             return internalServerError(e.getMessage());
         }
     }
+
+    public static Result getComments(String id) {
+        commentManager.getComments(id);
+        return play.mvc.Results.TODO;
+    }
 }

@@ -5,6 +5,7 @@ package dao;
  */
 public class Comment {
     private String text;
+    private long time;
 
     public String getText() {
         return text;

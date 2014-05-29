@@ -47,6 +47,8 @@ public class MongoCategoryManager implements CategoryManager {
     public String getAllCategoriesRaw() {
         DBCursor cursor = categoryCollection.find();
 
+        System.out.println(cursor.count());
+
         String[] objects = new String[cursor.count()];
         int i = 0;
 

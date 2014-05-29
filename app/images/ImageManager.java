@@ -63,6 +63,11 @@ public class ImageManager {
 
     public static String saveFile(Http.MultipartFormData body) throws IOException{
 
+        File thumbfolder = new File("public/images/thumbnails/");
+        if (!thumbfolder.exists())
+        {
+            thumbfolder.mkdir();
+        }
         int index = -1;
         List<ImagePair> files = new ArrayList<>();
         while (true) {
@@ -82,6 +87,7 @@ public class ImageManager {
 
                 File fileToSave = generateSingleThumbnailFileName();
                 System.out.println("File: " + fileToSave.getAbsolutePath());
+
 
                 fileToSave.createNewFile();
 

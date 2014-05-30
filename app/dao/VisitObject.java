@@ -55,6 +55,7 @@ public class VisitObject implements Iterator<VisitObject.VisitObjectDescription>
         return objectDescriptions[index++];
     }
 
+
     public class Location
     {
         double lat;
@@ -83,7 +84,7 @@ public class VisitObject implements Iterator<VisitObject.VisitObjectDescription>
 
     }
 
-    public class VisitObjectDescription
+    public static class VisitObjectDescription
     {
 
         private String shortDescription;

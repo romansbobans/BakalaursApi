@@ -11,6 +11,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.main;
 import views.html.objects_index;
+import views.html.objectsform;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class VisitObjectController extends Controller {
     }
 
     public static Result index(String id) {
-        return ok(main.render("Objekti", objects_index.render()));
+        return ok(main.render("Objekti", objects_index.render(visitObjectManager.getAllVisitObjectsForCategory(id),id)));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
@@ -45,7 +46,7 @@ public class VisitObjectController extends Controller {
     }
 
     public static Result prepareVisitObjectUploadPage(String categoryId) {
-        return play.mvc.Results.TODO;
+        return ok(main.render("Jauns objekts", objectsform.render(categoryId)));
     }
 
     public static Result deleteVisitObject(String objectId) {

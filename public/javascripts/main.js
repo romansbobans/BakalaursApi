@@ -77,6 +77,11 @@ $(document).ready(function() {
         }
     });
 
+    /**
+     * Timepickers
+     */
+    $('#timepicker1').timepicker();
+
 });
 
 

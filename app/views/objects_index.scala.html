@@ -1,1 +1,59 @@
-<div class="alert alert-info">Coming soon</div>
+@(visitObjects: Array[dao.VisitObject], categoryId: String)
+
+@if(visitObjects.length>0) {
+
+    @for(visitObject <- visitObjects) {
+        <div class="panel panel-default" id="categories-list-panel">
+
+            <div class="row desc-h4">
+                <h4>#ID @visitObject.getId</h4>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-1">
+                        <h4>Atrašanās vieta</h4>
+
+                    </div>
+                    <div class="col-md-8">
+
+                        <div class="row">
+                            <a class="btn btn-danger" href="/delete/category/@visitObject.getId">Dzēst objektu</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row desc-h4">
+                <h4>Kategorijas apraksti</h4>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Valods</th>
+                    <th>Nosaukums</th>
+                    <th>Īss apraksts</th>
+                </tr>
+
+                @for(description <- visitObject.getObjectDescriptions) {
+                    <tr>
+                        <td>@description.getLang</td>
+                        <td>@description.getName</td>
+                        <td>@description.getShortDescription</td>
+                    </tr>
+                }
+
+
+            </table>
+        </div>
+
+    }
+
+
+} else {
+    <div class="row">
+        <a class="btn btn-primary" href="@routes.VisitObjectController.prepareVisitObjectUploadPage(categoryId)">Pievienot</a>
+    </div>
+    <div class="alert alert-info">Nav pievienotu objektu!</div>
+}

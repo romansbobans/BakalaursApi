@@ -9,6 +9,8 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import views.html.main;
+import views.html.objects_index;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,6 +26,10 @@ public class VisitObjectController extends Controller {
     static
     {
         visitObjectManager = ManagerFactory.getInstance().getVisitObjectManager();
+    }
+
+    public static Result index(String id) {
+        return ok(main.render("Objekti", objects_index.render()));
     }
 
     @BodyParser.Of(BodyParser.Json.class)

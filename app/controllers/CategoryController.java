@@ -14,6 +14,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import views.html.category_upload;
 import views.html.index;
 import views.html.main;
 
@@ -48,7 +49,11 @@ public class CategoryController extends Controller {
 
 
     public static Result index() {
-        return ok(main.render("Welcome!", index.render()));
+        return ok(main.render("Welcome!", index.render(categoryManager.getAllCategories())));
+    }
+
+    public static Result add() {
+        return ok(main.render("Pievienot kategorijas", category_upload.render()));
     }
 
     public static Result saveCategory() {

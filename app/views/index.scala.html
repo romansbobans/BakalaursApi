@@ -1,16 +1,59 @@
-<table class="table">
-    <tr>
-        <th>#</th>
-        <th>Attēls</th>
-        <th>Nosaukums</th>
-        <th>Apraksts</th>
-        <th>Opcijas</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>image</td>
-        <td>Title</td>
-        <td>Desc</td>
-        <td>options</td>
-    </tr>
-</table>
+@(categories: Array[dao.Category])
+
+@if(categories.length>0) {
+
+    @for(category <- categories) {
+        <div class="panel panel-default" id="categories-list-panel">
+
+            <div class="row desc-h4">
+                <h4>#ID @category.getId</h4>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-1">
+                        <img src="http://@request().host().concat("/assets/"+category.getImage)" alt="Image" class="img-thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <a type="button" class="btn btn-primary" href="/views/@category.getId">Apskatīt objektus</a>
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-danger" href="/delete/category/@category.getId">Dzēst kategoriju</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row desc-h4">
+                <h4>Kategorijas apraksti</h4>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Valods</th>
+                    <th>Nosaukums</th>
+                    <th>Apraksts</th>
+                </tr>
+
+                @for(description <- category.getObjectDescription) {
+                    <tr>
+                        <td>@description.getLang</td>
+                        <td>@description.getName</td>
+                        <td>@description.getShortDescription</td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+    }
+
+
+} else {
+    <div class="row">
+        <a class="btn btn-primary" href="@routes.CategoryController.add()">Pievienot</a>
+    </div>
+    <div class="alert alert-info">Nav pievienotu kategoriju</div>
+}

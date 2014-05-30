@@ -6,11 +6,11 @@
 
 GET           /                                 controllers.CategoryController.index()
 
-GET           /upload/category                  controllers.CategoryController.prepareCategoryUploadWindow()
+GET           /upload/category                  controllers.CategoryController.add()
 
 POST          /upload/category                  controllers.CategoryController.saveCategory()
 
-DELETE        /delete/category/:id              controllers.CategoryController.deleteCategory(id: String)
+GET           /delete/category/:id              controllers.CategoryController.deleteCategory(id: String)
 
 GET           /edit/category/:id                controllers.CategoryController.prepareCategoryEditWindow(id: String)
 
@@ -19,12 +19,13 @@ POST          /edit/category/:id/:lang          controllers.CategoryController.e
 POST          /image/category/:id               controllers.CategoryController.changeImage(id: String)
 
 
+GET           /views/:id                        controllers.VisitObjectController.index(id: String)
 
 POST          /upload/view/:id                  controllers.VisitObjectController.saveVisitObject(id: String)
 
 POST          /view/titleimage/:id              controllers.VisitObjectController.saveTitleImage(id: String)
 
-GET           /views/:id                        controllers.VisitObjectController.prepareVisitObjectPage(id: String)
+#GET           /views/:id                        controllers.VisitObjectController.prepareVisitObjectPage(id: String)
 
 GET           /upload/view/:id                  controllers.VisitObjectController.prepareVisitObjectUploadPage(id: String)
 

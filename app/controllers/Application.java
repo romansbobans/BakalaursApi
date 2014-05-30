@@ -1,5 +1,7 @@
 package controllers;
 
+import database.ManagerFactory;
+import database.categories.CategoryManager;
 import play.*;
 import play.mvc.*;
 
@@ -14,8 +16,14 @@ import java.io.IOException;
 
 public class Application extends Controller {
 
+    private static final CategoryManager categoryManager;
+
+    static {
+        categoryManager = ManagerFactory.getInstance().getCategoryManager();
+    }
+
     public static Result index() {
-        return ok(main.render("TESTS", index.render()));
+        return ok(main.render("TESTS", index.render(categoryManager.getAllCategories())));
     }
 
     public static Result at(String filename) {

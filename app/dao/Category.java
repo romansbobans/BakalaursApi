@@ -42,13 +42,17 @@ public class Category implements Iterator<Category.Description> {
 
     }
 
+    public Description[] getObjectDescription() {
+        return objectDescription;
+    }
+
     public void setDescription(Description[] description)
     {
         index = 0;
         this.objectDescription = description;
     }
 
-    public class Description {
+    public static class Description {
         public String lang;
         public String name;
         public String shortDescription;

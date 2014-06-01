@@ -1,10 +1,13 @@
 package controllers;
 
-import dao.Category;
+import com.google.gson.Gson;
 import dao.ImagePair;
+import dao.VisitObject;
 import database.ManagerFactory;
 import database.visitobjects.VisitObjecManager;
 import images.ImageManager;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -14,8 +17,6 @@ import views.html.objects_index;
 import views.html.objectsform;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by TAHKICT on 27/05/14.
@@ -113,5 +114,12 @@ public class VisitObjectController extends Controller {
             e.printStackTrace();
         }
         return ok();
+    }
+
+    public static Result postRating(String id) {
+
+        String rating = request().body().asText();
+        VisitObject object = visitObjectManager.postRating(new Float(rating), id);
+        return ok(new Gson().toJson(object));
     }
 }

@@ -178,6 +178,22 @@ public class MongoVisitObjecManager implements VisitObjecManager {
         return false;
     }
 
+    @Override
+    public VisitObject postRating(Float rating, String objectId) {
+        VisitObject object = getVisitObject(objectId);
+        float rate = object.getRating();
+        int ratingCount = object.getRatingCount();
+        float absoluteRating = (ratingCount*rate);
+        absoluteRating+=rating;
+        float newRating = (absoluteRating/++ratingCount);
+        visitObjectCollection.update(new BasicDBObject(ID, objectId), new BasicDBObject("$set",new BasicDBObject(RATING, newRating)));
+
+
+        DBObject modifier = new BasicDBObject(RATING_COUNT, 1);
+        DBObject incQuery = new BasicDBObject("$inc", modifier);
+        visitObjectCollection.update(new BasicDBObject(ID, objectId), incQuery);
+        return getVisitObject(objectId);
+    }
 
 
     //Helper methods

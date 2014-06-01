@@ -37,4 +37,5 @@ public interface VisitObjecManager {
 
     boolean removeImagesFromView(String objectId, String link);
 
+    VisitObject postRating(Float rating, String objectId);
 }

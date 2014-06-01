@@ -21,9 +21,9 @@ public interface CategoryManager {
 
     boolean removeCategory(String catId);
 
-    boolean editCategory(String catId, String rawCategory, String lang);
+    boolean editCategory(String catId, String rawCategory);
 
-    boolean editCategory(String catId, Category newCategory, String lang);
+    boolean editCategory(String catId, Category newCategory);
 
     boolean addImageToCategory(String catId, String image);
 

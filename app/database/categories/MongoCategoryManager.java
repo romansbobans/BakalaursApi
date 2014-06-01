@@ -112,27 +112,21 @@ public class MongoCategoryManager implements CategoryManager {
     }
 
     @Override
-    public boolean editCategory(String catId, String rawCategory, String lang) {
+    public boolean editCategory(String catId, String rawCategory) {
         System.out.println(rawCategory + "\n");
 
         Category c = gson.fromJson(rawCategory, Category.class);
-
-        Category.Description d = c.next();
-
-        DBObject updateQuery = new BasicDBObject(MongoFieldNames.Categories.NAME,
-                d.getName()).append(MongoFieldNames.Categories.SHORT_DESCRIPTION, d.getShortDescription()).append(MongoFieldNames.Categories.LANG, d.getLang());
-        System.out.println(rawCategory);
-        DBObject statusQuery = new BasicDBObject(MongoFieldNames.Categories.LANG, lang);
-        DBObject fields = new BasicDBObject("$elemMatch", statusQuery);
-        DBObject query = new BasicDBObject(MongoFieldNames.ID, catId).append(MongoFieldNames.Categories.OBJ_DESCR,fields);
-        categoryCollection.update(query, new BasicDBObject("$set", new BasicDBObject(new BasicDBObject(MongoFieldNames.Categories.OBJ_DESCR + ".$", updateQuery))));
+;
+        DBObject object = createCategoryObject(c, catId);
+        DBObject query = new BasicDBObject(MongoFieldNames.ID, catId);
+        categoryCollection.update(query, new BasicDBObject("$set", object));
         return true;
     }
 
     @Override
-    public boolean editCategory(String catId, Category newCategory, String lang) {
+    public boolean editCategory(String catId, Category newCategory) {
         String rawCategory = gson.toJson(newCategory);
-        return editCategory(catId, rawCategory, lang);
+        return editCategory(catId, rawCategory);
     }
 
     @Override

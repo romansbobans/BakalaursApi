@@ -10,11 +10,11 @@ GET           /upload/category                  controllers.CategoryController.a
 
 POST          /upload/category                  controllers.CategoryController.saveCategory()
 
-GET           /delete/category/:id              controllers.CategoryController.deleteCategory(id: String)
+GET        /delete/category/:id              controllers.CategoryController.deleteCategory(id: String)
 
 GET           /edit/category/:id                controllers.CategoryController.prepareCategoryEditWindow(id: String)
 
-POST          /edit/category/:id/:lang          controllers.CategoryController.editCategory(id: String, lang: String)
+POST          /edit/category/:id          controllers.CategoryController.editCategory(id: String)
 
 POST          /image/category/:id               controllers.CategoryController.changeImage(id: String)
 
@@ -29,7 +29,7 @@ POST          /view/titleimage/:id              controllers.VisitObjectControlle
 
 GET           /upload/view/:id                  controllers.VisitObjectController.prepareVisitObjectUploadPage(id: String)
 
-DELETE        /delete/view/:id                  controllers.VisitObjectController.deleteVisitObject(id: String)
+GET        /delete/view/:id                  controllers.VisitObjectController.deleteVisitObject(id: String)
 
 GET           /view/add/:id                     controllers.VisitObjectController.prepareAddLanguagePage(id: String)
 

@@ -167,7 +167,6 @@ public class MongoVisitObjecManager implements VisitObjecManager {
 
     @Override
     public boolean removeImagesFromView(String objectId, String link) {
-        VisitObject object = getVisitObject(objectId);
         BasicDBObject updateQuery = new BasicDBObject();
         updateQuery.put( ID, objectId );
 

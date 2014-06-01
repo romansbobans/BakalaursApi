@@ -74,13 +74,15 @@ public class CategoryController extends Controller {
             {
                 return internalServerError();
             }
-            System.out.println("GOT IMAGE: " + thumbnail);
 
             if (thumbnail != null)
             {
 
-                System.out.println("GOT IMAGE: " + thumbnail);
                 categoryManager.addImageToCategory(category.getId(), thumbnail);
+            }
+            else
+            {
+
             }
 
         } catch (IOException e) {
@@ -96,11 +98,11 @@ public class CategoryController extends Controller {
 
     //Syntax of JSON: {"object_description":[{"lang":"LV","name":"Muzeji","shortDescription":"texthere"}]}
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result editCategory(String id, String lang) {
+    public static Result editCategory(String id) {
 
         String reqJSON = request().body().asJson().toString();
 
-        categoryManager.editCategory(id, reqJSON, lang);
+        categoryManager.editCategory(id, reqJSON);
         //categoryManager.editCategory()
         return play.mvc.Results.TODO;
     }

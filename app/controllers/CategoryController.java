@@ -14,6 +14,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import views.html.category_edit;
 import views.html.category_upload;
 import views.html.index;
 import views.html.main;
@@ -44,12 +45,13 @@ public class CategoryController extends Controller {
     }
 
     public static Result prepareCategoryEditWindow(String id) {
-        return ok(Arrays.toString(categoryManager.getAllCategories()));
+        Category cat = categoryManager.getCategory(id);
+        return ok(main.render("Labot kategoriju", category_edit.render(cat)));
     }
 
 
     public static Result index() {
-        return ok(main.render("Welcome!", index.render(categoryManager.getAllCategories())));
+        return ok(main.render("Sveiki!", index.render(categoryManager.getAllCategories())));
     }
 
     public static Result add() {
@@ -96,15 +98,14 @@ public class CategoryController extends Controller {
         return redirect("/");
     }
 
-    //Syntax of JSON: {"object_description":[{"lang":"LV","name":"Muzeji","shortDescription":"texthere"}]}
-    @BodyParser.Of(BodyParser.Json.class)
     public static Result editCategory(String id) {
+        Http.MultipartFormData fdata = request().body().asMultipartFormData();
 
-        String reqJSON = request().body().asJson().toString();
+        String[] data = fdata.asFormUrlEncoded().get("json");
 
-        categoryManager.editCategory(id, reqJSON);
+        categoryManager.editCategory(id, data[0]);
         //categoryManager.editCategory()
-        return play.mvc.Results.TODO;
+        return redirect("/");
     }
 
 

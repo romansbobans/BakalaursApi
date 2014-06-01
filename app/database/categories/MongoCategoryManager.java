@@ -115,9 +115,11 @@ public class MongoCategoryManager implements CategoryManager {
     public boolean editCategory(String catId, String rawCategory) {
         System.out.println(rawCategory + "\n");
 
-        Category c = gson.fromJson(rawCategory, Category.class);
-;
-        DBObject object = createCategoryObject(c, catId);
+        Category.Description[] c = gson.fromJson(rawCategory, Category.Description[].class);
+
+        Category newCat = new Category();
+        newCat.setDescription(c);
+        DBObject object = createCategoryObject(newCat, catId);
         DBObject query = new BasicDBObject(MongoFieldNames.ID, catId);
         categoryCollection.update(query, new BasicDBObject("$set", object));
         return true;

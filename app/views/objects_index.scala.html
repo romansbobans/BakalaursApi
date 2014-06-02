@@ -1,7 +1,9 @@
 @(visitObjects: Array[dao.VisitObject], categoryId: String)
 
+<div class="row">
+    <a class="btn btn-primary" href="@routes.VisitObjectController.prepareVisitObjectUploadPage(categoryId)">Pievienot</a>
+</div>
 @if(visitObjects.length>0) {
-
     @for(visitObject <- visitObjects) {
         <div class="panel panel-default" id="categories-list-panel">
 
@@ -9,17 +11,31 @@
                 <h4>#ID @visitObject.getId</h4>
             </div>
 
+
+            <form name="Upload" action="/view/titleimage/@visitObject.getId" enctype="multipart/form-data" method="post">
+                <div class="input-group col-md-4">
+                    <span class="input-group-btn">
+                        <span class="btn btn-primary btn-file">
+				    Browse… <input type="file" name="picture">
+				</span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Izvēlieties attēlu" readonly="">
+                </div>
+                <input type="submit" value="Saglabāt" class="btn"/>
+            </form>
+
             <div class="panel-body">
 
                 <div class="row">
                     <div class="col-md-1">
                         <h4>Atrašanās vieta</h4>
-
+                            <p>Platums: @visitObject.getLocation.getLat</p> <br/>
+                        <p>Garums: @visitObject.getLocation.getLang</p> <br/>
                     </div>
                     <div class="col-md-8">
 
                         <div class="row">
-                            <a class="btn btn-danger" href="/delete/category/@visitObject.getId">Dzēst objektu</a>
+                            <a class="btn btn-danger" href="/delete/view/@visitObject.getId">Dzēst objektu</a>
                         </div>
 
                     </div>
@@ -27,10 +43,12 @@
 
             </div>
             <div class="row desc-h4">
-                <h4>Kategorijas apraksti</h4>
+                <h4>Apskates objektu apraksti</h4>
             </div>
             <table class="table">
+                <img src="/assets/@visitObject.getTitleImageUrl"/>
                 <tr>
+
                     <th>Valods</th>
                     <th>Nosaukums</th>
                     <th>Īss apraksts</th>
@@ -43,17 +61,35 @@
                         <td>@description.getShortDescription</td>
                     </tr>
                 }
+                <tr>
+                    <th>Apraksts</th>
+                </tr>
+
+                @for(description <- visitObject.getObjectDescriptions) {
+                    <tr>
+                        <td>@description.getDescription</td>
+                    </tr>
+                }
 
 
             </table>
         </div>
 
+        <form name="Upload" action="/image/view/@visitObject.getId" enctype="multipart/form-data" method="post">
+            <div class="input-group col-md-4">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                    Browse… <input type="file" name="picture">
+                </span>
+                </span>
+                <input type="text" class="form-control" placeholder="Izvēlieties attēlu" readonly="">
+            </div>
+            <input type="submit" value="Pievienot attēlu pie galerijas" class="btn"/>
+        </form>
+
     }
 
 
 } else {
-    <div class="row">
-        <a class="btn btn-primary" href="@routes.VisitObjectController.prepareVisitObjectUploadPage(categoryId)">Pievienot</a>
-    </div>
     <div class="alert alert-info">Nav pievienotu objektu!</div>
 }

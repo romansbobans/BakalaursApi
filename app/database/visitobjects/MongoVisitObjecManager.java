@@ -28,6 +28,7 @@ public class MongoVisitObjecManager implements VisitObjecManager {
 
     @Override
     public void saveView(String catId, String objectRaw) {
+        System.out.println(objectRaw);
         VisitObject parsedObject = gson.fromJson(objectRaw, VisitObject.class);
         saveView(catId, parsedObject);
 
@@ -205,9 +206,9 @@ public class MongoVisitObjecManager implements VisitObjecManager {
         visitObject.append(CATEGORY_ID, categoryId).
                 append(IMAGE_PAIRS, buildImagePairs(object)).append(TITLE_IMAGE_URL, object.getTitleImageUrl());
 
-
-                visitObject.append(LOCATION, new BasicDBObject(Location.LAT, object.getLocation().getLat()).append(Location.LNG, object.getLocation().getLang()))
-                .append(RATING, object.getRating()).append(RATING_COUNT, object.getRatingCount())
+if (object.getLocation() != null)
+                visitObject.append(LOCATION, new BasicDBObject(Location.LAT, object.getLocation().getLat()).append(Location.LNG, object.getLocation().getLang()));
+                visitObject.append(RATING, object.getRating()).append(RATING_COUNT, object.getRatingCount())
                 .append(OBJECT_ARRAY, createVisitObjectDescription(object));
         return visitObject;
     }

@@ -23,6 +23,9 @@ public class VisitObject implements Iterator<VisitObject.VisitObjectDescription>
     private float rating;
     private int ratingCount;
 
+    public void setObjectDescriptions(VisitObjectDescription[] objectDescriptions) {
+        this.objectDescriptions = objectDescriptions;
+    }
 
     public float getRating() {
         return rating;

@@ -1,6 +1,6 @@
 @(categoryId: String)
 
-<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="objects-form" action="@routes.CategoryController.saveCategory()">
+<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="objects-form" action="@routes.VisitObjectController.saveVisitObject(categoryId)">
 
     <div class="row">
         <h3>Objekti</h3>
@@ -10,6 +10,22 @@
     <div class="row">
         <button type="button" id="add" class="btn btn-sm btn-primary">Pievienot <span class="glyphicon glyphicon-plus"></span></button>
     </div>
+    <div class="row latlng" id="latlng">
+    <div class="form-group">
+        <label for="input" class="col-sm-2 control-label">Platums</label>
+        <div class="col-md-8">
+            <input type="text" class="form-control lat" id="inputLat" placeholder="Lat" required="true">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="input" class="col-sm-2 control-label">Garums</label>
+        <div class="col-md-8">
+            <input type="text" class="form-control lng" id="inputLng" placeholder="Lng" required="true">
+        </div>
+    </div>
+        </div>
+
 
     <div class="row" id="panels">
         <div class="row panel-wrapper">

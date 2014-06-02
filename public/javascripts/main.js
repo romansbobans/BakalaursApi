@@ -53,11 +53,20 @@ $(document).ready(function() {
         $(this).closest(".groups-wrapper").append(clonable.fadeIn("fast"));
     });
 
+
+
     $("#submit-objects").click(function() {
 
         var workingHours = [];
         var groups = [];
+        var location = null;
 
+        $(".latlng").each(function() {
+            var lat = $(this).find(".lat").val();
+            var lng = $(this).find(".lng").val();
+            location = "\"location\": {\"lat\": \"" + lat +"\", \"lng\":\"" + lng + "\"}";
+
+        });
         $(".panel-wrapper").each(function() {
 
             var lang = $(this).find(".lang").val();
@@ -72,15 +81,26 @@ $(document).ready(function() {
                 var day = $(this).find(".day").val();
                 var from = $(this).find(".from").val();
                 var to = $(this).find(".to").val();
-
-                workingHours.push(new Day(day, from, to));
+                if (day == "" || from == "" || to == "")
+                {
+                }
+                else
+                {
+                    workingHours.push(new Day(day, from, to));
+                }
             });
 
             $(this).find(".group").each(function() {
                var name = $(this).find(".group-name").val();
                var price = $(this).find(".group-price").val();
 
-               groups.push(new Group(name, price));
+                if (name == "" || price == "")
+                {
+                }
+                else
+                {
+                    groups.push(new Group(name, price));
+                }
             });
 
             panel.workingHours = workingHours;
@@ -91,9 +111,10 @@ $(document).ready(function() {
 
         var jsonString = JSON.stringify(panels);
 
-        console.log(jsonString);
+        var total = "{" + location + ", \"objects\":" + jsonString + "}";
+        console.log(total);
 
-        $("#panels-json").val(jsonString);
+        $("#panels-json").val(total);
         $("#objects-form").submit();
     });
 

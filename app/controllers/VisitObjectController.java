@@ -17,6 +17,7 @@ import views.html.objects_index;
 import views.html.objectsform;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by TAHKICT on 27/05/14.
@@ -31,14 +32,15 @@ public class VisitObjectController extends Controller {
     }
 
     public static Result index(String id) {
+        System.out.print(Arrays.toString(visitObjectManager.getAllVisitObjectsForCategory(id)));
         return ok(main.render("Objekti", objects_index.render(visitObjectManager.getAllVisitObjectsForCategory(id),id)));
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
     public static Result saveVisitObject(String categoryId) {
+        Http.MultipartFormData fdata = request().body().asMultipartFormData();
 
-        String reqJSON = request().body().asJson().toString();
-        visitObjectManager.saveView(categoryId, reqJSON);
+        String[] data = fdata.asFormUrlEncoded().get("json");
+        visitObjectManager.saveView(categoryId, data[0]);
         return redirect("/views/" + categoryId);
     }
 

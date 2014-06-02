@@ -58,5 +58,6 @@ POST           /view/rating/:id                 controllers.VisitObjectControlle
 
 #GET         /*filename  controllers.Application.at(filename: String)
 
+GET           /assets/public/images/*file              controllers.Application.at(file)
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/public/*file              controllers.Assets.at(path="/public", file)

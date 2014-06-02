@@ -55,7 +55,7 @@ public class VisitObjectController extends Controller {
     public static Result deleteVisitObject(String objectId) {
 
         visitObjectManager.removeVisitObject(objectId);
-        return ok();
+        return redirect("/");
     }
 
     public static Result prepareAddLanguagePage(String id) {
@@ -84,13 +84,13 @@ public class VisitObjectController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ok();
+        return redirect("/");
     }
 
     public static Result removeImage(String id, String imageName) {
 
         visitObjectManager.removeImagesFromView(id, imageName);
-        return ok();
+        return redirect("/");
     }
 
     public static Result prepareEditPage(String id, String lang) {

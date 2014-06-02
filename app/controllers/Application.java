@@ -28,18 +28,20 @@ public class Application extends Controller {
 
     public static Result at(String filename) {
         response().setContentType("image");
+        System.out.print("getting image");
         ByteArrayOutputStream img_stream = null;
         try {
-            File file = new File("/" + filename);
+            File file = new File("public/images/" + filename);
             BufferedImage thumbnail = ImageIO.read(file);
             img_stream = new ByteArrayOutputStream();
             ImageIO.write(thumbnail, "png", img_stream);
         } catch (FileNotFoundException e) {
-            return badRequest("image not found");
+            return badRequest("image not found  " + filename);
         } catch (IOException e) {
-            return badRequest("image not found");
+            return badRequest("image not found  " + "public/" + filename);
         }
         return ok(img_stream.toByteArray());
     }
+
 
 }

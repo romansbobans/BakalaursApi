@@ -80,7 +80,7 @@ public class ImageManager {
                 File fileToSave = generateSingleThumbnailFileName();
                 System.out.println("File: " + fileToSave.getAbsolutePath());
 
-
+                fileToSave.setReadable(true);
                 fileToSave.createNewFile();
 
                 ImageIO.write(thumb, "png", fileToSave);

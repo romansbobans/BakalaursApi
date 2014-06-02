@@ -1,6 +1,6 @@
 @(categoryId: String)
 
-<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="categories-form" action="@routes.CategoryController.saveCategory()">
+<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="objects-form" action="@routes.CategoryController.saveCategory()">
 
     <div class="row">
         <h3>Objekti</h3>
@@ -8,7 +8,7 @@
 
 
     <div class="row">
-        <button type="button" id="add-category" class="btn btn-sm btn-primary">Pievienot <span class="glyphicon glyphicon-plus"></span></button>
+        <button type="button" id="add" class="btn btn-sm btn-primary">Pievienot <span class="glyphicon glyphicon-plus"></span></button>
     </div>
 
     <div class="row" id="panels">
@@ -48,50 +48,58 @@
 
                     <h5>Darba laiki:</h5>
 
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label class="col-md-6 control-label">Dienas</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="col-sm-4 form-control" placeholder="POTCP">
-                            </div>
-                        </div>
-                        <div class="col-md-7">
+                    <div class="form-group days-wrapper">
+                        <div class="row days-object">
                             <div class="col-sm-4">
-                                <label class="col-sm-2 control-label">No</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" placeholder="hh">
+                                <label class="col-md-6 control-label">Dienas</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="col-sm-4 form-control day" placeholder="POTCP">
                                 </div>
                             </div>
+                            <div class="col-md-7">
+                                <div class="col-sm-5">
+                                    <label class="col-sm-1 control-label">No</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control from" placeholder="hh:mm">
+                                    </div>
+                                </div>
 
-                            <div class="col-sm-4">
-                                <label class="col-sm-4 control-label">Līdz</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" placeholder="hh">
+                                <div class="col-sm-5">
+                                    <label class="col-sm-3 control-label">Līdz</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control to" placeholder="hh:mm">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <a id="add-day" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
                                 </div>
                             </div>
-
-                            <div class="col-sm-2">
-                                <a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
-                            </div>
                         </div>
+
                     </div>
 
                     <h5>Grupas</h5>
 
-                    <div class="row groups-wrapper">
-                        <div class="form-group">
-                            <div class="col-sm-7">
-                                <label class="col-md-3 control-label" style="margin-left:7px">Grupa</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="col-sm-4 form-control" placeholder="Grupa">
+                    <div class="form-group groups-wrapper">
+                        <div class="row group">
+                            <div class="col-sm-12">
+                                <label class="col-md-2 control-label" style="margin-left:7px">Grupa</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="col-sm-4 form-control group-name" placeholder="Grupa">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-md-4 control-label" style="margin-left:7px">Cena</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="col-sm-4 form-control group-price" placeholder="00,00">
+                                    </div>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+                                    <a class="btn btn-primary" id="add-group"><span class="glyphicon glyphicon-plus"></span></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -101,7 +109,7 @@
 
     <div class="row">
         <div>
-            <button id="submit" class="btn btn-primary">Saglabāt</button>
+            <button id="submit-objects" class="btn btn-primary">Saglabāt</button>
         </div>
     </div>
 
